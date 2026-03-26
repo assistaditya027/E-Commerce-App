@@ -1,0 +1,41 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Node / tooling
+node_modules/
+.pnp/
+.pnp.js
+.parcel-cache/
+.turbo/
+.cache/
+
+# Build outputs
+dist/
+build/
+coverage/
+.nyc_output/
+
+# Vite
+.vite/
+
+# Env files
+.env
+.env.*
+
+# Uploads / temp
+uploads/
+tmp/
+temp/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
