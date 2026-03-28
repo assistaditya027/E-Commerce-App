@@ -6,7 +6,7 @@ import axios from 'axios';
 export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
-  const currency = '₹';
+  const currency = '\u20B9';
   const deliveryFeeEnv = Number(import.meta.env.VITE_DELIVERY_FEE);
   const delivery_fee = Number.isFinite(deliveryFeeEnv) ? deliveryFeeEnv : 10;
   const backendUrl = import.meta.env.VITE_BACKEND_URL;

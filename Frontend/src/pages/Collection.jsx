@@ -120,6 +120,7 @@ const ViewToggle = ({ view, setView }) => (
 // ══════════════════════════════════════════
 const MobileFilterSheet = ({
   open, onClose,
+  currency,
   category, setCategory,
   subCategory, setSubCategory,
   priceRange, setPriceRange, maxPrice,
@@ -227,7 +228,9 @@ const MobileFilterSheet = ({
           <div>
             <div className="flex items-center justify-between mb-3">
               <p className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Price Range</p>
-              <span className="text-xs font-semibold text-gray-700 dark:text-gray-200">₹{priceRange[0]} – ₹{priceRange[1]}</span>
+              <span className="text-xs font-semibold text-gray-700 dark:text-gray-200">
+                {currency}{priceRange[0]} - {currency}{priceRange[1]}
+              </span>
             </div>
             <input
               type="range" min={0} max={maxPrice} value={priceRange[1]}
@@ -285,7 +288,7 @@ const MobileFilterSheet = ({
 
 // ── Mobile product card ──
 // ── Mobile product card (receives wishlist state from parent) ──
-const MobileProductCard = ({ item, wishlisted, onToggleWishlist }) => (
+const MobileProductCard = ({ item, wishlisted, onToggleWishlist, currency }) => (
   <Link
     to={`/product/${item._id}`}
     onClick={() => window.scrollTo(0, 0)}
@@ -317,7 +320,7 @@ const MobileProductCard = ({ item, wishlisted, onToggleWishlist }) => (
     </div>
     <div className="px-2.5 pt-2 pb-3">
       <p className="text-xs text-gray-800 dark:text-gray-100 font-medium leading-tight line-clamp-2">{item.name}</p>
-      <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">{item.price}</p>
+      <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">{currency}{item.price}</p>
     </div>
   </Link>
 );
@@ -327,7 +330,7 @@ const MobileProductCard = ({ item, wishlisted, onToggleWishlist }) => (
 //  MAIN COLLECTION PAGE
 // ══════════════════════════════════════════
 const Collection = () => {
-  const { products, search, showSearch, wishlist, toggleWishlist } = useContext(ShopContext);
+  const { products, search, showSearch, wishlist, toggleWishlist, currency } = useContext(ShopContext);
 
   const [showFilter, setShowFilter] = useState(true);
   const [showMobileFilter, setShowMobileFilter] = useState(false);
@@ -527,7 +530,13 @@ const Collection = () => {
           <>
             <div className="grid grid-cols-2 gap-3 px-4 py-3">
               {pagedProducts.map((item, index) => (
-                <MobileProductCard key={index} item={item} wishlisted={wishlist.includes(item._id)} onToggleWishlist={toggleWishlist} />
+                <MobileProductCard
+                  key={index}
+                  item={item}
+                  wishlisted={wishlist.includes(item._id)}
+                  onToggleWishlist={toggleWishlist}
+                  currency={currency}
+                />
               ))}
             </div>
 
@@ -559,6 +568,7 @@ const Collection = () => {
         <MobileFilterSheet
           open={showMobileFilter}
           onClose={() => setShowMobileFilter(false)}
+          currency={currency}
           category={category} setCategory={setCategory}
           subCategory={subCategory} setSubCategory={setSubCategory}
           priceRange={priceRange} setPriceRange={setPriceRange} maxPrice={maxPrice}
@@ -640,7 +650,7 @@ const Collection = () => {
             <FilterSection title="Price Range" defaultOpen={true} activeCount={priceRange[0] > 0 || priceRange[1] < maxPrice ? 1 : 0}>
               <div className="pt-1">
                 <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-2">
-                  <span>₹{priceRange[0]}</span><span>₹{priceRange[1]}</span>
+                  <span>{currency}{priceRange[0]}</span><span>{currency}{priceRange[1]}</span>
                 </div>
                 <input type="range" min={0} max={maxPrice} value={priceRange[1]} onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])} className="w-full accent-black dark:accent-white" />
                 <div className="flex gap-2 mt-3">
@@ -745,7 +755,7 @@ const Collection = () => {
                           <p className="text-sm font-medium text-gray-800 dark:text-gray-100">{item.name}</p>
                           <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{item.category} · {item.subCategory}</p>
                         </div>
-                        <p className="text-base font-semibold text-gray-900 dark:text-gray-100">₹{item.price}</p>
+                        <p className="text-base font-semibold text-gray-900 dark:text-gray-100">{currency}{item.price}</p>
                       </div>
                     </div>
                   ) : (
