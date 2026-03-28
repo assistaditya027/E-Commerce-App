@@ -38,7 +38,7 @@ const POLICIES = [
     desc: 'Changed your mind? Return within 7 days.',
     badge: 'No Fees',
     detail:
-      'Items must be unused and in original packaging. Refunds are processed within 3–5 business days after inspection.',
+      'Items must be unused and in original packaging. Refunds are processed within 3-5 business days after inspection.',
   },
   {
     img: assets.support_img,
@@ -59,8 +59,64 @@ const OurPolicy = () => {
       ref={sectionRef}
       className="py-14 sm:py-20 bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300"
     >
-      {/* Policy Cards */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 grid sm:grid-cols-3 gap-6 sm:gap-8">
+      {/* Mobile-only: compact accordion list */}
+      <div className="sm:hidden max-w-6xl mx-auto px-4">
+        <div className="flex flex-col gap-3">
+          {POLICIES.map(({ img, title, desc, badge, detail }, i) => (
+            <button
+              key={title}
+              type="button"
+              style={{ transitionDelay: `${i * 120}ms` }}
+              className={`text-left border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900 p-4 transition-all duration-500
+              ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+              onClick={() => setExpanded(expanded === i ? null : i)}
+            >
+              <div className="flex items-center gap-3">
+                <div
+                  className={`w-11 h-11 rounded-xl flex items-center justify-center transition
+                  ${expanded === i ? 'bg-black dark:bg-white' : 'bg-gray-50 dark:bg-gray-800'}`}
+                >
+                  <img
+                    src={img}
+                    alt={title}
+                    className={`w-5 transition ${expanded === i ? 'brightness-0 invert dark:invert-0' : ''}`}
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">
+                      {title}
+                    </h3>
+                    <span className="text-[10px] tracking-widest uppercase bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-2 py-0.5 rounded-full">
+                      {badge}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{desc}</p>
+                </div>
+                <svg
+                  className={`w-4 h-4 text-gray-400 transition-transform ${expanded === i ? 'rotate-180' : ''}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+              <div
+                className={`transition-all overflow-hidden duration-300
+                ${expanded === i ? 'max-h-24 opacity-100 mt-3' : 'max-h-0 opacity-0'}`}
+              >
+                <p className="text-xs text-gray-500 dark:text-gray-400 border-t border-gray-100 dark:border-gray-800 pt-3">
+                  {detail}
+                </p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop/Tablet: existing cards */}
+      <div className="hidden sm:grid max-w-6xl mx-auto px-4 sm:px-6 grid-cols-3 gap-6 sm:gap-8">
         {POLICIES.map(({ img, title, desc, badge, detail }, i) => (
           <div
             key={title}
@@ -149,7 +205,7 @@ const OurPolicy = () => {
             },
             {
               icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4',
-              text: 'Free Shipping ₹499+',
+              text: 'Free Shipping \u20B9499+',
             },
             {
               icon: 'M9 17a2 2 0 104 0m5-10h-3l-2-3H6a2 2 0 00-2 2v7h2m10 0h2v-3l-2-3z',
@@ -175,3 +231,6 @@ const OurPolicy = () => {
 };
 
 export default OurPolicy;
+
+
+

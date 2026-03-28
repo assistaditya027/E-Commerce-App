@@ -39,7 +39,7 @@ const BrandLogo = ({ brand }) => (
   <Link
     to={brand.link}
     className="group flex-shrink-0 flex flex-col items-center justify-center gap-2
-      w-36 sm:w-44 px-4 py-5 mx-3
+      w-28 sm:w-44 px-3 sm:px-4 py-4 sm:py-5 mx-2 sm:mx-3
       border border-gray-100 dark:border-gray-800
       bg-white dark:bg-gray-950
       hover:border-gray-300 dark:hover:border-gray-600
@@ -47,7 +47,7 @@ const BrandLogo = ({ brand }) => (
       transition-all duration-300"
   >
     <span
-      className="text-base sm:text-lg font-semibold tracking-tight leading-none whitespace-nowrap
+      className="text-xs sm:text-lg font-semibold tracking-tight leading-none whitespace-nowrap
         text-gray-800 dark:text-gray-200
         group-hover:text-gray-900 dark:group-hover:text-white
         transition-colors"
@@ -56,7 +56,7 @@ const BrandLogo = ({ brand }) => (
       {brand.name}
     </span>
     <span
-      className="text-[9px] tracking-[0.2em] uppercase whitespace-nowrap
+      className="text-[8px] sm:text-[9px] tracking-[0.2em] uppercase whitespace-nowrap
       text-gray-300 dark:text-gray-600
       group-hover:text-gray-500 dark:group-hover:text-gray-400
       transition-colors"
@@ -119,9 +119,44 @@ const Brands = () => {
         Carefully selected brand partners and exclusive collaborations — all in one place.
       </p>
 
-      {/* ── Marquee section ── */}
+      {/* Mobile-only: marquee animation */}
       <div
-        className="border-y border-gray-100 dark:border-gray-800 py-10 overflow-hidden
+        className="sm:hidden border-y border-gray-100 dark:border-gray-800 py-6 overflow-hidden
+        bg-white dark:bg-gray-950"
+      >
+        <p
+          className="text-center text-[10px] tracking-[0.35em] uppercase
+          text-gray-300 dark:text-gray-600 mb-5"
+        >
+          Trusted Brand Partners
+        </p>
+
+        <MarqueeRow
+          items={TRACK}
+          direction="ltr"
+          speed={24}
+          paused={pauseControl}
+          fadeColor={fadeColor}
+        />
+        <MarqueeRow
+          items={[...TRACK].reverse()}
+          direction="rtl"
+          speed={20}
+          paused={pauseControl}
+          fadeColor={fadeColor}
+        />
+
+        <p
+          className="text-center text-[9px] tracking-[0.25em] uppercase
+          text-gray-200 dark:text-gray-700 mt-5"
+        >
+          Tap a brand to explore
+        </p>
+      </div>
+
+      {/* â”€â”€ Marquee section â”€â”€ */}
+      <div
+        className="hidden sm:block border-y border-gray-100 dark:border-gray-800 py-10 overflow-hidden
         bg-white dark:bg-gray-950"
       >
         <p
@@ -150,7 +185,7 @@ const Brands = () => {
           className="text-center text-[9px] tracking-[0.25em] uppercase
           text-gray-200 dark:text-gray-700 mt-6"
         >
-          Hover to pause · Click to explore
+          Hover to pause - Click to explore
         </p>
       </div>
 
