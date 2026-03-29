@@ -13,6 +13,14 @@ a.active hr {
   font-family: outfit;
 }
 
+body {
+  transition: opacity 0.2s ease;
+}
+
+html.offline-transition body {
+  opacity: 0;
+}
+
 .prata-regular {
   font-family: 'Prata', serif;
   font-weight: 400;
