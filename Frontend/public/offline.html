@@ -3,18 +3,30 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0f172a" />
     <title>No Internet Connection</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      /* ─── Reset ─────────────────────────────────────────────── */
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-      html { font-size: 16px; }
+      /* ─── Base ───────────────────────────────────────────────── */
+      html {
+        font-size: 16px;
+      }
 
       body {
         min-height: 100vh;
         background: #f9f9f9;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
         color: #111;
         display: flex;
         flex-direction: column;
@@ -22,15 +34,31 @@
         justify-content: center;
         padding: 40px 24px;
         -webkit-font-smoothing: antialiased;
+
+        /* Page fades in on load */
         opacity: 0;
-        animation: offlineFadeIn 0.2s ease forwards;
+        animation: pageFadeIn 0.25s ease forwards;
+
+        /* Page fades out before redirect */
+        transition: opacity 0.22s ease;
       }
 
-      /* Icon */
+      /* Used by JS before redirect — fades body to 0 */
+      html.going-online body {
+        opacity: 0 !important;
+        transition: opacity 0.22s ease;
+      }
+
+      @keyframes pageFadeIn {
+        from { opacity: 0; transform: translateY(6px); }
+        to   { opacity: 1; transform: translateY(0);   }
+      }
+
+      /* ─── Icon ───────────────────────────────────────────────── */
       .icon-wrap {
-        width: 64px;
-        height: 64px;
-        margin-bottom: 24px;
+        width: 72px;
+        height: 72px;
+        margin-bottom: 28px;
       }
 
       .icon-wrap svg {
@@ -38,10 +66,11 @@
         height: 100%;
       }
 
-      /* Content block */
+      /* ─── Content ────────────────────────────────────────────── */
       .content {
         text-align: center;
         max-width: 380px;
+        width: 100%;
       }
 
       h1 {
@@ -59,7 +88,7 @@
         margin-bottom: 28px;
       }
 
-      /* Actions */
+      /* ─── Buttons ────────────────────────────────────────────── */
       .actions {
         display: flex;
         flex-direction: column;
@@ -73,10 +102,10 @@
         justify-content: center;
         gap: 8px;
         padding: 0 20px;
-        height: 40px;
+        height: 42px;
         background: #111;
         color: #fff;
-        font-family: inherit;
+        font-family: 'Outfit', sans-serif;
         font-size: 14px;
         font-weight: 500;
         border: none;
@@ -84,26 +113,30 @@
         cursor: pointer;
         width: 100%;
         max-width: 260px;
-        transition: background 0.15s, transform 0.1s;
+        transition: background 0.15s, transform 0.1s, opacity 0.15s;
       }
 
-      .btn-primary:hover { background: #222; }
-      .btn-primary:active { transform: scale(0.98); }
+      .btn-primary:hover  { background: #222; }
+      .btn-primary:active { transform: scale(0.97); }
+      .btn-primary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
 
       .btn-secondary {
-        font-family: inherit;
+        font-family: 'Outfit', sans-serif;
         font-size: 13px;
         color: #999;
         background: none;
         border: none;
         cursor: pointer;
         padding: 4px 0;
-        text-decoration: none;
         transition: color 0.15s;
       }
       .btn-secondary:hover { color: #444; }
 
-      /* Divider */
+      /* ─── Divider ────────────────────────────────────────────── */
       .divider {
         width: 40px;
         height: 1px;
@@ -111,13 +144,13 @@
         margin: 32px auto;
       }
 
-      /* Tips */
+      /* ─── Tips ───────────────────────────────────────────────── */
       .tips {
         list-style: none;
         text-align: left;
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 14px;
         max-width: 300px;
         margin: 0 auto;
       }
@@ -139,94 +172,224 @@
         color: #bbb;
       }
 
-      /* Footer */
+      /* ─── Toast banner ───────────────────────────────────────── */
+      .toast {
+        position: fixed;
+        bottom: 56px;
+        left: 50%;
+        transform: translateX(-50%) translateY(8px);
+        background: #111;
+        color: #fff;
+        font-family: 'Outfit', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 9px 20px;
+        border-radius: 999px;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        z-index: 100;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* ─── Footer ─────────────────────────────────────────────── */
       footer {
         position: fixed;
-        bottom: 24px;
+        bottom: 20px;
         left: 0;
         right: 0;
         text-align: center;
         font-size: 12px;
-        color: #bbb;
+        color: #ccc;
+      }
+
+      /* ─── Spinner on retry button ────────────────────────────── */
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      .spin {
+        animation: spin 0.7s linear infinite;
+        display: inline-block;
       }
     </style>
   </head>
   <body>
 
-    <!-- WiFi off icon -->
-    <div class="icon-wrap">
+    <!-- No-WiFi icon -->
+    <div class="icon-wrap" aria-hidden="true">
       <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="32" cy="32" r="32" fill="#f0f0f0"/>
-        <!-- Slash line -->
-        <line x1="18" y1="18" x2="46" y2="46" stroke="#ccc" stroke-width="2.5" stroke-linecap="round"/>
-        <!-- WiFi arcs, clipped by slash -->
-        <path d="M14 28a25.5 25.5 0 0 1 36 0" stroke="#bbb" stroke-width="3" stroke-linecap="round" fill="none"/>
-        <path d="M20 33.5a17 17 0 0 1 24 0" stroke="#bbb" stroke-width="3" stroke-linecap="round" fill="none"/>
-        <path d="M26 39a8.5 8.5 0 0 1 12 0" stroke="#bbb" stroke-width="3" stroke-linecap="round" fill="none"/>
-        <circle cx="32" cy="44" r="2.5" fill="#bbb"/>
-        <!-- X over icon -->
-        <line x1="18" y1="18" x2="46" y2="46" stroke="#ddd" stroke-width="2" stroke-linecap="round"/>
+        <path d="M14 28a25.5 25.5 0 0 1 36 0"   stroke="#d1d5db" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M20 33.5a17 17 0 0 1 24 0"      stroke="#d1d5db" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M26 39a8.5 8.5 0 0 1 12 0"      stroke="#d1d5db" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <circle cx="32" cy="44" r="2.5" fill="#d1d5db"/>
+        <!-- Slash -->
+        <line x1="16" y1="16" x2="48" y2="48" stroke="#9ca3af" stroke-width="2.5" stroke-linecap="round"/>
       </svg>
     </div>
 
     <div class="content">
       <h1>No internet connection</h1>
-      <p>Check your Wi-Fi or mobile data settings and try again. Your cart and account are safe.</p>
+      <p>Check your Wi-Fi or mobile data and try again.<br/>Your cart and account are safe.</p>
 
       <div class="actions">
-        <button class="btn-primary" onclick="window.location.reload()">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <button class="btn-primary" id="retryBtn" onclick="handleRetry()">
+          <svg id="retryIcon" width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M1.5 7a5.5 5.5 0 1 0 1-3.12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M1.5 2.5v2H3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M1.5 2.5v2H3.5"              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           Try again
         </button>
-        <button class="btn-secondary" onclick="window.location.replace('/')">Go to homepage</button>
+        <button class="btn-secondary" onclick="handleRetry()">Go to homepage</button>
       </div>
 
       <div class="divider"></div>
 
-      <ul class="tips">
+      <ul class="tips" aria-label="Troubleshooting tips">
         <li>
-          <svg class="tip-icon" viewBox="0 0 16 16" fill="none">
-            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/>
-            <path d="M8 5v3.5l2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          <svg class="tip-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2zm0 3v3.5l2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
           </svg>
           Make sure airplane mode is turned off
         </li>
         <li>
-          <svg class="tip-icon" viewBox="0 0 16 16" fill="none">
+          <svg class="tip-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <rect x="1" y="4" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
             <path d="M5 4V3a3 3 0 0 1 6 0v1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
           </svg>
           Try switching between Wi-Fi and cellular
         </li>
         <li>
-          <svg class="tip-icon" viewBox="0 0 16 16" fill="none">
-            <path d="M2 8h12M8 2v12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          <svg class="tip-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <circle cx="8" cy="8" r="6.4" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M2 8h12M8 2.5C6.5 4 5.5 6 5.5 8s1 4 2.5 5.5M8 2.5C9.5 4 10.5 6 10.5 8s-1 4-2.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
           </svg>
           Move closer to your router
         </li>
       </ul>
     </div>
 
+    <!-- Toast notification -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
     <footer>Your cart is saved</footer>
 
     <script>
-      window.addEventListener('online', () => {
-        document.documentElement.classList.add('offline-transition');
-        setTimeout(() => window.location.replace('/'), 220);
+      // ─── State ────────────────────────────────────────────────
+      let isRedirecting = false;
+      let pollTimer     = null;
+      let toastTimer    = null;
+
+      const retryBtn  = document.getElementById('retryBtn');
+      const retryIcon = document.getElementById('retryIcon');
+      const toast     = document.getElementById('toast');
+
+      // ─── Toast helpers ────────────────────────────────────────
+      function showToast(msg, autohide) {
+        clearTimeout(toastTimer);
+        toast.textContent = msg;
+        toast.classList.add('show');
+        if (autohide) {
+          toastTimer = setTimeout(hideToast, autohide);
+        }
+      }
+
+      function hideToast() {
+        toast.classList.remove('show');
+      }
+
+      // ─── Button state helpers ─────────────────────────────────
+      function setChecking(yes) {
+        retryBtn.disabled = yes;
+        retryIcon.className = yes ? 'spin' : '';
+      }
+
+      // ─── Real connectivity check ──────────────────────────────
+      // Pings Google's 204 endpoint — returns true only on real internet.
+      // Avoids captive-portal false positives (hotel/airport Wi-Fi).
+      async function isReallyOnline() {
+        try {
+          const res = await fetch('https://www.gstatic.com/generate_204', {
+            method: 'HEAD',
+            cache:  'no-store',
+            signal: AbortSignal.timeout(5000),
+          });
+          return res.status === 204 || res.ok;
+        } catch {
+          return false;
+        }
+      }
+
+      // ─── Redirect to home ─────────────────────────────────────
+      function redirectHome() {
+        if (isRedirecting) return;
+        isRedirecting = true;
+
+        clearInterval(pollTimer);
+        clearTimeout(toastTimer);
+
+        showToast(' Back online — redirecting…');
+
+        // Short delay so the user sees the toast, then fade out
+        setTimeout(() => {
+          document.documentElement.classList.add('going-online');
+          setTimeout(() => {
+            window.location.replace('/');
+          }, 240);
+        }, 700);
+      }
+
+      // ─── Manual retry ─────────────────────────────────────────
+      async function handleRetry() {
+        if (isRedirecting) return;
+        setChecking(true);
+        showToast('🔄 Checking connection…');
+
+        const online = await isReallyOnline();
+
+        if (online) {
+          redirectHome();
+        } else {
+          setChecking(false);
+          showToast('❌ Still offline. Check your connection.', 2800);
+        }
+      }
+
+      // ─── Auto-redirect: browser online event ──────────────────
+      // Fires when device reconnects to any network
+      window.addEventListener('online', async () => {
+        if (isRedirecting) return;
+        // Small delay — browser fires 'online' slightly before
+        // the network is actually usable
+        setTimeout(async () => {
+          const online = await isReallyOnline();
+          if (online) redirectHome();
+        }, 1000);
+      });
+
+      // ─── Auto-redirect: polling fallback ─────────────────────
+      // Android / iOS don't always fire 'online' reliably,
+      // so we also poll every 6 seconds quietly in the background.
+      pollTimer = setInterval(async () => {
+        if (isRedirecting || !navigator.onLine) return;
+        const online = await isReallyOnline();
+        if (online) redirectHome();
+      }, 6000);
+
+      // ─── Visibility change ────────────────────────────────────
+      // User comes back to the tab after fixing their connection
+      document.addEventListener('visibilitychange', async () => {
+        if (document.hidden || isRedirecting) return;
+        const online = await isReallyOnline();
+        if (online) redirectHome();
       });
     </script>
 
   </body>
 </html>
-      html.offline-transition body {
-        opacity: 0;
-      }
-
-      @keyframes offlineFadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }

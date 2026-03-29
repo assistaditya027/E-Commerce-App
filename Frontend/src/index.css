@@ -2,35 +2,49 @@
 
 @import 'tailwindcss';
 
-/* Enable class-based dark mode (used by ThemeContext) */
+/* ─── Dark mode (class-based, used by ThemeContext) ──────────── */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ─── Active nav link ─────────────────────────────────────────── */
 a.active hr {
   display: block;
 }
 
+/* ─── Global font ─────────────────────────────────────────────── */
+/* Fix: correct casing + sans-serif fallback */
 * {
-  font-family: outfit;
+  font-family: 'Outfit', sans-serif;
 }
 
+/* ─── Offline fade-out transition ────────────────────────────── */
+/* body fades out smoothly before pwa.js redirects to /offline.html */
 body {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.22s ease;
 }
 
-html.offline-transition body {
-  opacity: 0;
+/* pwa.js adds this class to <html> just before redirect */
+html.going-offline body {
+  opacity: 0 !important;
 }
 
+/* ─── Prata font utility ──────────────────────────────────────── */
 .prata-regular {
   font-family: 'Prata', serif;
   font-weight: 400;
   font-style: normal;
 }
 
+/* ─── Hide scrollbar (all browsers) ─────────────────────────── */
 ::-webkit-scrollbar {
   display: none;
 }
 
+* {
+  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;   /* IE / Edge */
+}
+
+/* ─── Mobile active nav ───────────────────────────────────────── */
 @media (max-width: 640px) {
   a.active {
     background-color: black;
