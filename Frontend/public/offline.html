@@ -179,7 +179,7 @@
           </svg>
           Try again
         </button>
-        <button class="btn-secondary">Go to homepage</button>
+        <button class="btn-secondary" onclick="window.location.replace('/')">Go to homepage</button>
       </div>
 
       <div class="divider"></div>
@@ -210,6 +210,12 @@
     </div>
 
     <footer>Your cart is saved</footer>
+
+    <script>
+      window.addEventListener('online', () => {
+        window.location.replace('/');
+      });
+    </script>
 
   </body>
 </html>
