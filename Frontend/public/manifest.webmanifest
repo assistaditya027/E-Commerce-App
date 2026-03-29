@@ -1,0 +1,16 @@
+{
+  "name": "E-Commerce App",
+  "short_name": "Shop",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/clovo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

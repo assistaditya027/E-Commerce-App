@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>No Internet Connection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      html { font-size: 16px; }
+
+      body {
+        min-height: 100vh;
+        background: #f9f9f9;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        color: #111;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 24px;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* Icon */
+      .icon-wrap {
+        width: 64px;
+        height: 64px;
+        margin-bottom: 24px;
+      }
+
+      .icon-wrap svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Content block */
+      .content {
+        text-align: center;
+        max-width: 380px;
+      }
+
+      h1 {
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: #111;
+        margin-bottom: 8px;
+      }
+
+      p {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 28px;
+      }
+
+      /* Actions */
+      .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 0 20px;
+        height: 40px;
+        background: #111;
+        color: #fff;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 100%;
+        max-width: 260px;
+        transition: background 0.15s, transform 0.1s;
+      }
+
+      .btn-primary:hover { background: #222; }
+      .btn-primary:active { transform: scale(0.98); }
+
+      .btn-secondary {
+        font-family: inherit;
+        font-size: 13px;
+        color: #999;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px 0;
+        text-decoration: none;
+        transition: color 0.15s;
+      }
+      .btn-secondary:hover { color: #444; }
+
+      /* Divider */
+      .divider {
+        width: 40px;
+        height: 1px;
+        background: #e5e5e5;
+        margin: 32px auto;
+      }
+
+      /* Tips */
+      .tips {
+        list-style: none;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+
+      .tips li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 13px;
+        color: #555;
+        line-height: 1.5;
+      }
+
+      .tip-icon {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        margin-top: 1px;
+        color: #bbb;
+      }
+
+      /* Footer */
+      footer {
+        position: fixed;
+        bottom: 24px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 12px;
+        color: #bbb;
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- WiFi off icon -->
+    <div class="icon-wrap">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="32" fill="#f0f0f0"/>
+        <!-- Slash line -->
+        <line x1="18" y1="18" x2="46" y2="46" stroke="#ccc" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- WiFi arcs, clipped by slash -->
+        <path d="M14 28a25.5 25.5 0 0 1 36 0" stroke="#bbb" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M20 33.5a17 17 0 0 1 24 0" stroke="#bbb" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M26 39a8.5 8.5 0 0 1 12 0" stroke="#bbb" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <circle cx="32" cy="44" r="2.5" fill="#bbb"/>
+        <!-- X over icon -->
+        <line x1="18" y1="18" x2="46" y2="46" stroke="#ddd" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div class="content">
+      <h1>No internet connection</h1>
+      <p>Check your Wi-Fi or mobile data settings and try again. Your cart and account are safe.</p>
+
+      <div class="actions">
+        <button class="btn-primary" onclick="window.location.reload()">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M1.5 7a5.5 5.5 0 1 0 1-3.12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M1.5 2.5v2H3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Try again
+        </button>
+        <button class="btn-secondary">Go to homepage</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <ul class="tips">
+        <li>
+          <svg class="tip-icon" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M8 5v3.5l2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          Make sure airplane mode is turned off
+        </li>
+        <li>
+          <svg class="tip-icon" viewBox="0 0 16 16" fill="none">
+            <rect x="1" y="4" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M5 4V3a3 3 0 0 1 6 0v1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          Try switching between Wi-Fi and cellular
+        </li>
+        <li>
+          <svg class="tip-icon" viewBox="0 0 16 16" fill="none">
+            <path d="M2 8h12M8 2v12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            <circle cx="8" cy="8" r="6.4" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+          Move closer to your router
+        </li>
+      </ul>
+    </div>
+
+    <footer>Your cart is saved</footer>
+
+  </body>
+</html>
