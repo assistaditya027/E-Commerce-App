@@ -1,6 +1,15 @@
-# Clovo E-Commerce Platform
+# Clovo E-Commerce Clothing Platform
 
 A comprehensive, full-stack e-commerce solution featuring a customer-facing storefront, administrative dashboard, and RESTful API backend. Built with modern web technologies for scalability, performance, and maintainability.
+
+---
+
+## 🚀 Live Demo
+
+| 🛒 Frontend | ⚙️ Admin Dashboard | 🔌 Backend API |
+|---|---|---|
+| [clovo-psi.vercel.app](https://clovo-psi.vercel.app/) | [clovo-admin.vercel.app](https://clovo-admin.vercel.app/) | [clovo-backend.onrender.com](https://clovo-backend.onrender.com/) |
+> ⚠️ Payments are in **test mode**. Use Stripe card `4000 0035 6000 0008`
 
 ---
 
@@ -22,13 +31,13 @@ A comprehensive, full-stack e-commerce solution featuring a customer-facing stor
 
 ## 🎯 Overview
 
-Clovo is a complete e-commerce platform consisting of three integrated applications:
+Clovo is a complete e-commerce clothing platform consisting of three integrated applications:
 
 | Application | Purpose | Port |
 |------------|---------|------|
 | **Frontend** | Customer-facing web storefront | `5173` |
-| **Admin Dashboard** | Business administration & inventory management | `5174` |
-| **Backend API** | RESTful API server & business logic | `8000` |
+| **Admin Dashboard** | Business administration | `5174` |
+| **Backend API** | RESTful API server | `8000` |
 
 ---
 
@@ -37,6 +46,8 @@ Clovo is a complete e-commerce platform consisting of three integrated applicati
 ### Frontend (Customer Portal)
 - 🛒 Product browsing and search functionality
 - 💳 Secure checkout with multiple payment gateways (Stripe, Razorpay)
+  > ⚠️ **Note:** Payment is in **test mode** only.
+  > Use Stripe test card: `4000 0035 6000 0008`
 - 👤 User authentication (OAuth & JWT)
 - 📦 Order tracking and history
 - 🎨 Dark mode support
