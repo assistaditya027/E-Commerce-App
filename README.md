@@ -438,14 +438,15 @@ For detailed component documentation, API endpoints, and troubleshooting:
 
 ## 📄 License
 
-Repository License: [Specify Your License - MIT, Apache 2.0, etc.]
+This project is licensed under the MIT License.
+See the LICENSE file for details.
 
 ---
 
 ## 👥 Contributors
 
-- Project Lead: [Your Name]
-- Development Team: [Team Members]
+- Project Lead: [Aditya Kumar]
+- Development Team: [Self]
 
 ---
 
