@@ -246,7 +246,7 @@
           </svg>
           Try again
         </button>
-        <button class="btn-secondary" onclick="handleRetry()">Go to homepage</button>
+        <button class="btn-secondary" onclick="goHomeNow()">Go to homepage</button>
       </div>
 
       <div class="divider"></div>
@@ -314,15 +314,25 @@
       // Pings Google's 204 endpoint — returns true only on real internet.
       // Avoids captive-portal false positives (hotel/airport Wi-Fi).
       async function isReallyOnline() {
+        // First check navigator.onLine
+        if (!navigator.onLine) return false;
+        
         try {
           const res = await fetch('https://www.gstatic.com/generate_204', {
             method: 'HEAD',
             cache:  'no-store',
+            mode: 'no-cors',  // Bypass CORS issues
             signal: AbortSignal.timeout(5000),
           });
-          return res.status === 204 || res.ok;
+          return true;  // If fetch succeeded, we're online
         } catch {
-          return false;
+          // Fallback: try to fetch from same origin (will use cache if offline)
+          try {
+            const res = await fetch('/', { method: 'HEAD', cache: 'no-store' });
+            return res.status === 200;
+          } catch {
+            return false;
+          }
         }
       }
 
@@ -351,14 +361,35 @@
         setChecking(true);
         showToast('🔄 Checking connection…');
 
-        const online = await isReallyOnline();
+        try {
+          const online = await isReallyOnline();
 
-        if (online) {
-          redirectHome();
-        } else {
+          if (online) {
+            redirectHome();
+          } else {
+            setChecking(false);
+            showToast('❌ Still offline. Check your connection.', 2800);
+          }
+        } catch (error) {
           setChecking(false);
-          showToast('❌ Still offline. Check your connection.', 2800);
+          showToast('⚠️ Error checking connection.', 2800);
+          console.error('[Offline] Retry error:', error);
         }
+      }
+
+      // ─── Go home immediately (cached) ──────────────────────────
+      function goHomeNow() {
+        if (isRedirecting) return;
+        isRedirecting = true;
+
+        clearInterval(pollTimer);
+        clearTimeout(toastTimer);
+
+        // Fade out and navigate immediately (page is cached)
+        document.documentElement.classList.add('going-online');
+        setTimeout(() => {
+          window.location.replace('/');
+        }, 240);
       }
 
       // ─── Auto-redirect: browser online event ──────────────────
