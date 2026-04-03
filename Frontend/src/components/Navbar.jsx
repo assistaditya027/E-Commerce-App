@@ -51,7 +51,7 @@ const Navbar = () => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const { setShowSearch, getCartCount, navigate, token, setToken, setCartItems } =
+  const { setShowSearch, getCartCount, navigate, token, setToken, setCartItems, getWishlistCount } =
     useContext(ShopContext);
   const { dark, toggle } = useTheme();
   const profileRef = useRef(null);
@@ -101,6 +101,7 @@ const Navbar = () => {
   };
 
   const cartCount = getCartCount();
+  const wishlistCount = getWishlistCount();
 
   return (
     <>
@@ -288,6 +289,40 @@ const Navbar = () => {
               )}
             </Link>
 
+            {/* Wishlist — md+ only */}
+            <Link
+              to="/wishlist"
+              aria-label={`Wishlist, ${wishlistCount} item${wishlistCount !== 1 ? 's' : ''}`}
+              className="relative hidden md:flex w-10 h-10 lg:w-11 lg:h-11 items-center justify-center rounded-xl
+                text-gray-600 dark:text-gray-400
+                hover:bg-gray-100 dark:hover:bg-gray-800
+                active:scale-95 transition-all duration-150"
+            >
+              <svg
+                className="w-4 h-4 lg:w-5 lg:h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.8}
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                />
+              </svg>
+              {wishlistCount > 0 && (
+                <span
+                  className="absolute top-1.5 right-1.5 min-w-[16px] h-[16px] lg:min-w-[18px] lg:h-[18px] px-1
+                  flex items-center justify-center
+                  bg-red-500 text-white
+                  text-[9px] lg:text-[10px] font-bold rounded-full leading-none pointer-events-none"
+                >
+                  {wishlistCount > 99 ? '99+' : wishlistCount}
+                </span>
+              )}
+            </Link>
+
             {/* Hamburger — mobile & tablet only (hidden md+) */}
             <IconBtn onClick={() => setVisible(true)} label="Open menu" className="md:hidden">
               <img src={assets.menu_icon} className="w-5 h-5" alt="" aria-hidden="true" />
@@ -448,6 +483,40 @@ const Navbar = () => {
               ORDERS
             </button>
           )}
+
+          {/* Wishlist */}
+          <button
+            onClick={() => {
+              setVisible(false);
+              navigate('/wishlist');
+            }}
+            className="flex items-center gap-3 px-4 py-3.5 sm:py-4 rounded-xl
+              hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white
+              transition-colors text-left relative"
+          >
+            <div className="relative w-5 h-5">
+              <svg
+                className="w-5 h-5 opacity-50"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.8}
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                />
+              </svg>
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-red-500 text-white
+                  text-[8px] font-bold rounded-full flex items-center justify-center leading-none">
+                  {wishlistCount > 99 ? '99' : wishlistCount}
+                </span>
+              )}
+            </div>
+            WISHLIST
+          </button>
 
           {/* Dark mode */}
           <button

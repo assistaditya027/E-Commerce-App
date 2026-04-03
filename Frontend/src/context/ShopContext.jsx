@@ -40,19 +40,48 @@ const ShopContextProvider = (props) => {
   //  WISHLIST FUNCTIONS
   // ══════════════════════════════════════════
 
-  // Toggle a product in/out of wishlist
-  const toggleWishlist = (productId) => {
-    setWishlist((prev) => {
-      const updated = prev.includes(productId)
-        ? prev.filter((id) => id !== productId)
-        : [...prev, productId];
-      safeSet('wishlist', JSON.stringify(updated));
-      return updated;
-    });
+  // Toggle a product in/out of wishlist (syncs with backend)
+  const toggleWishlist = async (productId) => {
+    try {
+      if (token) {
+        // If user is logged in, sync with backend
+        if (!apiBase) { toast.error('Backend URL is not configured.'); return; }
+        const response = await axios.post(
+          `${apiBase}/api/wishlist/toggle`,
+          { productId },
+          { headers: { token } }
+        );
+        if (response.data.success) {
+          setWishlist(response.data.wishlist || []);
+          const action = response.data.isWishlisted ? 'Added to' : 'Removed from';
+          toast.success(`${action} Wishlist`);
+        } else {
+          toast.error(response.data.message);
+        }
+      } else {
+        // If not logged in, use localStorage
+        setWishlist((prev) => {
+          const updated = prev.includes(productId)
+            ? prev.filter((id) => id !== productId)
+            : [...prev, productId];
+          safeSet('wishlist', JSON.stringify(updated));
+          return updated;
+        });
+        toast.success(
+          wishlist.includes(productId) ? 'Removed from Wishlist' : 'Added to Wishlist'
+        );
+      }
+    } catch (error) {
+      console.warn(error);
+      toast.error(error.message || 'Error updating wishlist');
+    }
   };
 
   // Check if a product is wishlisted
   const isWishlisted = (productId) => wishlist.includes(productId);
+
+  // Get wishlist count
+  const getWishlistCount = () => wishlist.length;
 
   // Load wishlist from localStorage on mount
   useEffect(() => {
@@ -62,6 +91,25 @@ const ShopContextProvider = (props) => {
       catch { /* ignore */ }
     }
   }, []);
+
+  // Load wishlist from backend when user logs in
+  const loadUserWishlist = useCallback(async (authToken) => {
+    if (!apiBase) return;
+    try {
+      const response = await axios.post(
+        `${apiBase}/api/wishlist/get`,
+        {},
+        { headers: { token: authToken } }
+      );
+      if (response.data.success) {
+        setWishlist(response.data.wishlist || []);
+      } else {
+        console.warn('Failed to load wishlist:', response.data.message);
+      }
+    } catch (error) {
+      console.warn('Error loading wishlist:', error);
+    }
+  }, [apiBase]);
 
   // ══════════════════════════════════════════
   //  CART FUNCTIONS (unchanged)
@@ -185,6 +233,7 @@ const ShopContextProvider = (props) => {
   useEffect(() => {
     if (token) {
       loadUserCart(token);
+      loadUserWishlist(token);
     } else {
       const storedCart = safeGet('cartItems');
       if (storedCart) {
@@ -192,7 +241,7 @@ const ShopContextProvider = (props) => {
         catch (error) { console.warn(error); }
       }
     }
-  }, [token, loadUserCart]);
+  }, [token, loadUserCart, loadUserWishlist]);
 
   useEffect(() => {
     if (!token) safeSet('cartItems', JSON.stringify(cartItems));
@@ -221,6 +270,7 @@ const ShopContextProvider = (props) => {
     wishlist,
     toggleWishlist,
     isWishlisted,
+    getWishlistCount,
   };
 
   return <ShopContext.Provider value={value}>{props.children}</ShopContext.Provider>;

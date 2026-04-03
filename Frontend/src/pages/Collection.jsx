@@ -288,42 +288,54 @@ const MobileFilterSheet = ({
 
 // ── Mobile product card ──
 // ── Mobile product card (receives wishlist state from parent) ──
-const MobileProductCard = ({ item, wishlisted, onToggleWishlist, currency }) => (
-  <Link
-    to={`/product/${item._id}`}
-    onClick={() => window.scrollTo(0, 0)}
-    className="block bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 active:scale-95 transition-transform duration-150"
-  >
-    <div className="relative aspect-[3/4] overflow-hidden bg-gray-50 dark:bg-gray-800">
-      <img
-        src={Array.isArray(item.image) ? item.image[0] : item.image}
-        alt={item.name}
-        className="w-full h-full object-cover"
-      />
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          onToggleWishlist(item._id);
-        }}
-        className={`absolute top-2 right-2 w-7 h-7 rounded-full shadow flex items-center justify-center active:scale-90 transition-all duration-200 ${wishlisted ? 'bg-red-50 dark:bg-red-900/30' : 'bg-white dark:bg-gray-900'}`}
-      >
-        <svg
-          className={`w-3.5 h-3.5 transition-colors duration-200 ${wishlisted ? 'text-red-500' : 'text-gray-400'}`}
-          fill={wishlisted ? 'currentColor' : 'none'}
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+const MobileProductCard = ({ item, wishlisted, onToggleWishlist, currency }) => {
+  const price = Number(item.price) || 0;
+  const comparePrice = Number(item.comparePrice) || 0;
+  const hasDiscount = comparePrice > price;
+  const discountPct = hasDiscount ? Math.round((1 - price / comparePrice) * 100) : 0;
+
+  return (
+    <Link
+      to={`/product/${item._id}`}
+      onClick={() => window.scrollTo(0, 0)}
+      className="block bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 active:scale-95 transition-transform duration-150"
+    >
+      <div className="relative aspect-[3/4] overflow-hidden bg-gray-50 dark:bg-gray-800">
+        <img
+          src={Array.isArray(item.image) ? item.image[0] : item.image}
+          alt={item.name}
+          className="w-full h-full object-cover"
+        />
+        {hasDiscount && (
+          <div className="absolute top-2 left-2 bg-red-500 text-white text-[9px] font-bold px-2 py-1 rounded shadow-md">
+            -{discountPct}%
+          </div>
+        )}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onToggleWishlist(item._id);
+          }}
+          className={`absolute top-2 right-2 w-7 h-7 rounded-full shadow flex items-center justify-center active:scale-90 transition-all duration-200 ${wishlisted ? 'bg-red-50 dark:bg-red-900/30' : 'bg-white dark:bg-gray-900'}`}
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-        </svg>
-      </button>
-    </div>
-    <div className="px-2.5 pt-2 pb-3">
-      <p className="text-xs text-gray-800 dark:text-gray-100 font-medium leading-tight line-clamp-2">{item.name}</p>
-      <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">{currency}{item.price}</p>
-    </div>
-  </Link>
-);
+          <svg
+            className={`w-3.5 h-3.5 transition-colors duration-200 ${wishlisted ? 'text-red-500' : 'text-gray-400'}`}
+            fill={wishlisted ? 'currentColor' : 'none'}
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+        </button>
+      </div>
+      <div className="px-2.5 pt-2 pb-3">
+        <p className="text-xs text-gray-800 dark:text-gray-100 font-medium leading-tight line-clamp-2">{item.name}</p>
+        <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">{currency}{item.price}</p>
+      </div>
+    </Link>
+  );
+};
 
 
 // ══════════════════════════════════════════
@@ -581,7 +593,7 @@ const Collection = () => {
       </div>
 
       {/* ═══════════════════════════════════════
-          DESKTOP LAYOUT — COMPLETELY UNCHANGED
+                      DESKTOP LAYOUT
       ═══════════════════════════════════════ */}
       <div className="hidden sm:flex flex-row gap-6 sm:gap-10 pt-6 sm:pt-10 border-t border-gray-100 dark:border-gray-800">
 
@@ -746,22 +758,41 @@ const Collection = () => {
           ) : (
             <>
               <div className={gridClass}>
-                {pagedProducts.map((item, index) =>
-                  view === 'list' ? (
-                    <div key={index} className="flex flex-col sm:flex-row gap-4 border border-gray-100 dark:border-gray-800 p-3 hover:border-gray-300 dark:hover:border-gray-600 transition-colors">
-                      <img src={item.image[0]} alt={item.name} className="w-full sm:w-24 h-44 sm:h-32 object-cover flex-shrink-0" />
-                      <div className="flex flex-col justify-between py-1 min-w-0">
+                {pagedProducts.map((item, index) => {
+                  const price = Number(item.price) || 0;
+                  const comparePrice = Number(item.comparePrice) || 0;
+                  const hasDiscount = comparePrice > price;
+                  const discountPct = hasDiscount ? Math.round((1 - price / comparePrice) * 100) : 0;
+                  const savings = hasDiscount ? comparePrice - price : 0;
+                  
+                  return view === 'list' ? (
+                    <div key={index} className="flex flex-col sm:flex-row gap-4 border border-gray-100 dark:border-gray-800 p-3 hover:border-gray-300 dark:hover:border-gray-600 transition-colors relative">
+                      <div className="relative w-full sm:w-24 h-44 sm:h-32 flex-shrink-0 overflow-hidden">
+                        <img src={item.image[0]} alt={item.name} className="w-full h-full object-cover" />
+                        {/* Discount Badge */}
+                        {hasDiscount && (
+                          <div className="absolute top-1 left-1 bg-red-500 text-white text-[9px] font-bold px-2 py-1 rounded shadow-md">
+                            -{discountPct}%
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex flex-col justify-between py-1 min-w-0 flex-1">
                         <div>
                           <p className="text-sm font-medium text-gray-800 dark:text-gray-100">{item.name}</p>
                           <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{item.category} · {item.subCategory}</p>
                         </div>
-                        <p className="text-base font-semibold text-gray-900 dark:text-gray-100">{currency}{item.price}</p>
+                        <div className="flex items-center gap-2">
+                          <p className="text-base font-semibold text-gray-900 dark:text-gray-100">{currency}{Math.round(price)}</p>
+                          {hasDiscount && (
+                            <p className="text-sm text-gray-400 line-through">{currency}{Math.round(comparePrice)}</p>
+                          )}
+                        </div>
                       </div>
                     </div>
                   ) : (
-                    <ProductItem key={index} name={item.name} id={item._id} price={item.price} image={item.image} />
-                  )
-                )}
+                    <ProductItem key={index} name={item.name} id={item._id} price={item.price} comparePrice={item.comparePrice} image={item.image} />
+                  );
+                })}
               </div>
 
               {totalPages > 1 && (

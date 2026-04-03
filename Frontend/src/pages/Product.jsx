@@ -335,7 +335,7 @@ const ReviewForm = ({ onSubmit }) => {
 // ══════════════════════════════════════════
 const Product = () => {
   const { productId } = useParams();
-  const { products, currency, addToCart } = useContext(ShopContext);
+  const { products, currency, addToCart, toggleWishlist, isWishlisted } = useContext(ShopContext);
 
   const [productData, setProductData] = useState(false);
   const [image, setImage] = useState('');
@@ -346,7 +346,6 @@ const Product = () => {
   const [imgLoaded, setImgLoaded] = useState(false);
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
   const [zoomOpen, setZoomOpen] = useState(false);
-  const [wishlisted, setWishlisted] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [shareState, setShareState] = useState('idle');
   const imgRef = useRef(null);
@@ -557,18 +556,19 @@ const Product = () => {
                 )}
               </button>
               <button
-                onClick={() => setWishlisted((w) => !w)}
+                onClick={() => toggleWishlist(productData._id)}
                 className={`w-9 h-9 border flex items-center justify-center transition-all
                   ${
-                    wishlisted
+                    isWishlisted(productData._id)
                       ? 'border-red-200 bg-red-50 dark:bg-red-950 dark:border-red-800'
                       : 'border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-700'
                   }`}
+                aria-label={isWishlisted(productData._id) ? 'Remove from wishlist' : 'Add to wishlist'}
               >
                 <svg
-                  className={`w-4 h-4 transition-colors ${wishlisted ? 'text-red-500 fill-red-500' : 'text-gray-400 dark:text-gray-500 fill-none'}`}
+                  className={`w-4 h-4 transition-colors ${isWishlisted(productData._id) ? 'text-red-500 fill-red-500' : 'text-gray-400 dark:text-gray-500 fill-none'}`}
                   stroke="currentColor"
-                  strokeWidth={wishlisted ? 0 : 1.8}
+                  strokeWidth={isWishlisted(productData._id) ? 0 : 1.8}
                   viewBox="0 0 24 24"
                 >
                   <path
