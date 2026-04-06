@@ -18,6 +18,7 @@ import {
   buildStripeLineItems,
 } from '../services/orderPricing.js';
 import { buildStatusEntry, appendStatusHistory } from '../services/orderLifecycle.js';
+import { sendOrderConfirmation, sendOrderStatusUpdate } from '../services/emailService.js';
 
 const currency = 'inr';
 const deliveryChargeEnv = Number(process.env.DELIVERY_CHARGE);
@@ -180,6 +181,35 @@ const placeOrder = async (req, res) => {
       });
 
       logInfo('order.cod.created', { orderId: createdOrder?._id, userId });
+      
+      // Send confirmation email
+      try {
+        const user = await userModel.findById(userId).select('email name');
+        if (user && createdOrder) {
+          const orderDetails = {
+            orderId: createdOrder._id,
+            customerName: user.name,
+            items: createdOrder.items.map((item) => ({
+              name: item.name,
+              size: item.size,
+              quantity: item.quantity,
+              price: item.price,
+            })),
+            subtotal: createdOrder.items.reduce((sum, item) => sum + item.price * item.quantity, 0),
+            deliveryCharge: deliveryCharge,
+            tax: 0,
+            total: createdOrder.amount,
+            paymentMethod: 'Cash on Delivery',
+          };
+          await sendOrderConfirmation(user.email, orderDetails);
+          logInfo('order.confirmation.email.sent', { orderId: createdOrder._id, email: user.email });
+        } else {
+          logWarn('order.confirmation.email.skip', { reason: 'user_or_order_missing' });
+        }
+      } catch (emailError) {
+        logWarn('order.confirmation.email.failed', { error: emailError.message });
+      }
+      
       return res
         .status(201)
         .json({ success: true, orderId: createdOrder?._id, order: createdOrder });
@@ -396,7 +426,7 @@ const verifyStripe = async (req, res) => {
       const stripeSession = await stripe.checkout.sessions.retrieve(paymentOrderId);
 
       if (stripeSession.payment_status === 'paid') {
-        await orderModel.findByIdAndUpdate(orderId, {
+        const updatedOrder = await orderModel.findByIdAndUpdate(orderId, {
           $set: {
             payment: true,
             status: 'Order Placed',
@@ -404,9 +434,39 @@ const verifyStripe = async (req, res) => {
             paymentGateway: 'Stripe',
           },
           $push: { statusHistory: buildStatusEntry('Order Placed', 'system') },
-        });
+        }, { new: true });
+        
         await userModel.findByIdAndUpdate(userId, { cartData: {} });
         logInfo('order.stripe.verify.confirmed', { orderId, sessionId: paymentOrderId });
+        
+        // Send confirmation email
+        try {
+          const user = await userModel.findById(userId).select('email name');
+          if (user && updatedOrder) {
+            const orderDetails = {
+              orderId: updatedOrder._id,
+              customerName: user.name,
+              items: updatedOrder.items.map((item) => ({
+                name: item.name,
+                size: item.size,
+                quantity: item.quantity,
+                price: item.price,
+              })),
+              subtotal: updatedOrder.items.reduce((sum, item) => sum + item.price * item.quantity, 0),
+              deliveryCharge: deliveryCharge,
+              tax: 0,
+              total: updatedOrder.amount,
+              paymentMethod: 'Stripe',
+            };
+            await sendOrderConfirmation(user.email, orderDetails);
+            logInfo('order.confirmation.email.sent', { orderId: updatedOrder._id, email: user.email });
+          } else {
+            logWarn('order.confirmation.email.skip', { reason: 'user_or_order_missing' });
+          }
+        } catch (emailError) {
+          logWarn('order.confirmation.email.failed', { error: emailError.message });
+        }
+        
         return res.json({ success: true, status: 'Order Placed', payment: true });
       }
 
@@ -611,7 +671,7 @@ const verifyRazorpay = async (req, res) => {
     if (order.payment) return res.json({ success: true, status: order.status, payment: true });
 
     // ✅ Signature valid = payment confirmed — update immediately
-    await orderModel.findByIdAndUpdate(order._id, {
+    const updatedOrder = await orderModel.findByIdAndUpdate(order._id, {
       $set: {
         payment: true,
         status: 'Order Placed',
@@ -620,9 +680,38 @@ const verifyRazorpay = async (req, res) => {
         paymentGateway: 'Razorpay',
       },
       $push: { statusHistory: buildStatusEntry('Order Placed', 'system') },
-    });
+    }, { new: true });
+    
     await userModel.findByIdAndUpdate(userId, { cartData: {} });
     logInfo('order.razorpay.verify.confirmed', { orderId: order._id, razorpay_order_id });
+
+    // Send confirmation email
+    try {
+      const user = await userModel.findById(userId).select('email name');
+      if (user && updatedOrder) {
+        const orderDetails = {
+          orderId: updatedOrder._id,
+          customerName: user.name,
+          items: updatedOrder.items.map((item) => ({
+            name: item.name,
+            size: item.size,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+          subtotal: updatedOrder.items.reduce((sum, item) => sum + item.price * item.quantity, 0),
+          deliveryCharge: deliveryCharge,
+          tax: 0,
+          total: updatedOrder.amount,
+          paymentMethod: 'Razorpay',
+        };
+        await sendOrderConfirmation(user.email, orderDetails);
+        logInfo('order.confirmation.email.sent', { orderId: updatedOrder._id, email: user.email });
+      } else {
+        logWarn('order.confirmation.email.skip', { reason: 'user_or_order_missing' });
+      }
+    } catch (emailError) {
+      logWarn('order.confirmation.email.failed', { error: emailError.message });
+    }
 
     return res.json({ success: true, status: 'Order Placed', payment: true });
   } catch (error) {
@@ -686,6 +775,20 @@ const updateStatus = async (req, res) => {
     );
     await order.save();
     logInfo('order.status.updated', { orderId, status, by: req.adminEmail || 'admin' });
+    
+    // Send status update email
+    try {
+      const user = await userModel.findById(order.userId).select('email name');
+      if (user) {
+        await sendOrderStatusUpdate(user.email, user.name, orderId, status.toLowerCase());
+        logInfo('order.status.email.sent', { orderId, status });
+      } else {
+        logWarn('order.status.email.skip', { reason: 'user_not_found' });
+      }
+    } catch (emailError) {
+      logWarn('order.status.email.failed', { error: emailError.message });
+    }
+    
     res.json({ success: true, message: 'Status Updated' });
   } catch (error) {
     logError('order.status.update.error', { message: error.message });

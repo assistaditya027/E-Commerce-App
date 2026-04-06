@@ -224,14 +224,18 @@ const sendResetEmail = async (to, resetLink) => {
   const pass = process.env.SMTP_PASS;
   const from = process.env.SMTP_FROM || 'no-reply@example.com';
 
-  if (!host || !user || !pass) return false;
+  if (!host || !user || !pass) {
+    console.warn('[sendResetEmail] SMTP not configured');
+    return false;
+  }
 
-  const transporter = nodemailer.createTransport({
-    host,
-    port,
-    secure: port === 465,
-    auth: { user, pass },
-  });
+  try {
+    const transporter = nodemailer.createTransport({
+      host,
+      port,
+      secure: port === 465,
+      auth: { user, pass },
+    });
 
   const html = `
       <div style="font-family: Arial, sans-serif; color:#111; line-height:1.5; max-width:560px; margin:0 auto;">
@@ -254,15 +258,20 @@ const sendResetEmail = async (to, resetLink) => {
       </div>
     `;
 
-  await transporter.sendMail({
-    from,
-    to,
-    subject: 'Reset your password',
-    text: `Reset your password: ${resetLink}`,
-    html,
-  });
+    await transporter.sendMail({
+      from,
+      to,
+      subject: 'Reset your password',
+      text: `Reset your password: ${resetLink}`,
+      html,
+    });
 
-  return true;
+    console.log(`[sendResetEmail] Email sent to ${to}`);
+    return true;
+  } catch (error) {
+    console.error(`[sendResetEmail] Error sending to ${to}:`, error.message);
+    throw error;
+  }
 };
 
 const forgotPassword = async (req, res) => {
@@ -293,16 +302,21 @@ const forgotPassword = async (req, res) => {
     await user.save();
 
     const resetLink = buildResetLink(req, token, email);
-    const emailed = await sendResetEmail(email, resetLink);
-
-    if (emailed) {
-      return res.json({ success: true, message: 'Reset link sent to your email.' });
+    
+    try {
+      const emailed = await sendResetEmail(email, resetLink);
+      if (emailed) {
+        return res.json({ success: true, message: 'Reset link sent to your email.' });
+      }
+    } catch (emailError) {
+      console.error('[forgotPassword] Email sending failed:', emailError.message);
+      // Continue to show dev fallback if email fails
     }
 
-    // Dev fallback if SMTP not configured
+    // Dev/fallback: if SMTP not configured or email failed
     return res.json({
       success: true,
-      message: 'Reset link generated (email not configured).',
+      message: 'Reset link generated (email not configured or failed).',
       resetUrl: resetLink,
     });
   } catch (error) {
