@@ -49,16 +49,22 @@ Clovo is a complete e-commerce clothing platform consisting of three integrated 
   > ⚠️ **Note:** Payment is in **test mode** only.
   > Use Stripe test card: `4000 0035 6000 0008`
 - 👤 User authentication (OAuth & JWT)
+- 🔑 Password recovery and reset flow (Forgot/Reset Password)
+- 🙍 Profile management and password updates
 - 📦 Order tracking and history
 - 🎨 Dark mode support
 - 📱 Fully responsive design
 - 🔐 Social login integration (Google, GitHub)
 - 📧 Newsletter subscription
 - ⭐ Wishlist management
+- 📜 Privacy Policy and Terms pages with cookie consent preferences
+- 📲 PWA support with service worker registration and offline fallback page
 
 ### Admin Dashboard
+- 🔐 Admin authentication with protected dashboard access
 - 📊 Order management & fulfillment
 - 📦 Product management & inventory control
+- ✏️ Product editing and visibility toggles
 - 👥 User management
 - 📈 Business analytics
 - 🖼️ Image management with Cloudinary integration
@@ -67,10 +73,16 @@ Clovo is a complete e-commerce clothing platform consisting of three integrated 
 ### Backend API
 - 🔐 JWT-based authentication
 - 🛡️ Role-based access control (Admin/User)
+- 🌐 OAuth authentication (Google, GitHub via Passport)
 - 💰 Payment gateway integration (Stripe, Razorpay)
+- 🔔 Payment webhooks for Stripe and Razorpay
+- 🛒 Cart and wishlist APIs
+- 📬 Newsletter subscribe/unsubscribe APIs
 - 📧 Email notifications (Nodemailer)
 - 🌩️ Cloud storage (Cloudinary)
 - ✅ Data validation & error handling
+- ⏱️ Automated pending-order sweep/cancellation job
+- 🧪 Node test coverage for order helpers and validation utilities
 - 📝 Comprehensive logging
 
 ---
@@ -196,6 +208,10 @@ MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/database_name
 # JWT Secret
 JWT_SECRET=your_secure_jwt_secret_key_here
 
+# Admin Credentials
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=your_secure_admin_password
+
 # Cloudinary (Image Storage)
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
@@ -228,6 +244,7 @@ ADMIN_FRONTEND_URL=http://localhost:5174
 # Application
 PORT=8000
 DELIVERY_CHARGE=10
+PAYMENT_PENDING_SWEEP_MINUTES=5
 ```
 
 ### Frontend Configuration (`Frontend/.env`)
@@ -461,6 +478,6 @@ See the LICENSE file for details.
 
 ---
 
-**Last Updated**: March 2026  
+**Last Updated**: April 2026  
 **Node.js Version**: 18.0+  
 **npm Version**: 9.0+
