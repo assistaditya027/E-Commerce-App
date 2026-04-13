@@ -4,6 +4,7 @@ import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/assets';
 import Title from '../components/Title';
 import ProductItem from '../components/ProductItem';
+import { CollectionIcon1, CollectionIcon2, CollectionIcon3, CollectionIcon4, CollectionIcon5, CollectionIcon6, CollectionIcon7, CollectionIcon8, CollectionIcon9, CollectionIcon10, CollectionIcon11, CollectionIcon12, CollectionIcon13, CollectionIcon14, CollectionIcon15, CollectionIcon16, CollectionIcon17, CollectionIcon18, CollectionIcon19 } from '../assets/assets';
 
 const CATEGORIES = ['Men', 'Women', 'Kids'];
 const SUB_CATEGORIES = ['Topwear', 'Bottomwear', 'Winterwear'];
@@ -28,12 +29,10 @@ const FilterSection = ({ title, defaultOpen = true, children, activeCount = 0 })
             </span>
           )}
         </div>
-        <svg
+        <CollectionIcon1
           className={`w-3.5 h-3.5 text-gray-400 dark:text-gray-500 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
           fill="none" stroke="currentColor" viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
+         />
       </button>
       <div className={`overflow-hidden transition-all duration-300 ease-in-out ${open ? 'max-h-96 pb-4' : 'max-h-0'}`}>
         <div className="px-4 sm:px-5">{children}</div>
@@ -52,9 +51,7 @@ const CheckItem = ({ label, checked, onChange, count }) => (
           ${checked ? 'bg-black border-black dark:bg-white dark:border-white' : 'border-gray-300 dark:border-gray-600 group-hover:border-gray-500 dark:group-hover:border-gray-400'}`}
       >
         {checked && (
-          <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-          </svg>
+          <CollectionIcon2 className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
         )}
       </div>
       <span className={`text-sm transition-colors ${checked ? 'text-gray-900 dark:text-gray-100 font-medium' : 'text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200'}`}>
@@ -77,16 +74,12 @@ const StarRow = ({ rating, checked, onChange }) => (
           ${checked ? 'bg-black border-black dark:bg-white dark:border-white' : 'border-gray-300 dark:border-gray-600 group-hover:border-gray-500 dark:group-hover:border-gray-400'}`}
       >
         {checked && (
-          <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-          </svg>
+          <CollectionIcon3 className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
         )}
       </div>
       <div className="flex gap-0.5">
         {Array.from({ length: 5 }).map((_, i) => (
-          <svg key={i} className={`w-3 h-3 ${i < rating ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'}`} fill="currentColor" viewBox="0 0 20 20">
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-          </svg>
+          <CollectionIcon4 key={i} className={`w-3 h-3 ${i < rating ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'}`} fill="currentColor" viewBox="0 0 20 20" />
         ))}
       </div>
       <span className="text-xs text-gray-500 dark:text-gray-400">& up</span>
@@ -107,9 +100,7 @@ const ViewToggle = ({ view, setView }) => (
         onClick={() => setView(key)}
         className={`p-2 transition-colors ${view === key ? 'bg-black text-white dark:bg-white dark:text-gray-900' : 'hover:bg-gray-50 dark:hover:bg-gray-900 text-gray-500 dark:text-gray-400'}`}
       >
-        <svg className="w-4 h-4" fill={key === 'list' ? 'none' : 'currentColor'} stroke="currentColor" strokeWidth={key === 'list' ? 2 : 0} viewBox="0 0 24 24">
-          {icon}
-        </svg>
+        <CollectionIcon5 className="w-4 h-4" fill={key === 'list' ? 'none' : 'currentColor'} stroke="currentColor" strokeWidth={key === 'list' ? 2 : 0} viewBox="0 0 24 24" icon={icon} />
       </button>
     ))}
   </div>
@@ -260,9 +251,7 @@ const MobileFilterSheet = ({
                 >
                   <div className="flex gap-0.5">
                     {Array.from({ length: 5 }).map((_, i) => (
-                      <svg key={i} className={`w-3.5 h-3.5 ${i < r ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'}`} fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
+                      <CollectionIcon6 key={i} className={`w-3.5 h-3.5 ${i < r ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'}`} fill="currentColor" viewBox="0 0 20 20" />
                     ))}
                   </div>
                   {r}★ & above
@@ -319,14 +308,12 @@ const MobileProductCard = ({ item, wishlisted, onToggleWishlist, currency }) => 
           }}
           className={`absolute top-2 right-2 w-7 h-7 rounded-full shadow flex items-center justify-center active:scale-90 transition-all duration-200 ${wishlisted ? 'bg-red-50 dark:bg-red-900/30' : 'bg-white dark:bg-gray-900'}`}
         >
-          <svg
+          <CollectionIcon7
             className={`w-3.5 h-3.5 transition-colors duration-200 ${wishlisted ? 'text-red-500' : 'text-gray-400'}`}
             fill={wishlisted ? 'currentColor' : 'none'}
             stroke="currentColor"
             viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-          </svg>
+           />
         </button>
       </div>
       <div className="px-2.5 pt-2 pb-3">
@@ -443,9 +430,7 @@ const Collection = () => {
             onClick={() => setShowMobileFilter(true)}
             className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-sm font-medium text-gray-700 dark:text-gray-200 active:scale-95 transition-transform"
           >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z" />
-            </svg>
+            <CollectionIcon8 className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
             Filter
             {activeFilterCount > 0 && (
               <span className="bg-indigo-600 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold leading-none">
@@ -487,9 +472,7 @@ const Collection = () => {
                 className="flex-shrink-0 flex items-center gap-1 text-xs bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 px-3 py-1 rounded-full active:scale-95 transition-transform"
               >
                 {tag}
-                <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <CollectionIcon9 className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
               </button>
             ))}
             {inStockOnly && (
@@ -498,9 +481,7 @@ const Collection = () => {
                 className="flex-shrink-0 flex items-center gap-1 text-xs bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 px-3 py-1 rounded-full active:scale-95 transition-transform"
               >
                 In Stock
-                <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <CollectionIcon10 className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
               </button>
             )}
           </div>
@@ -525,9 +506,7 @@ const Collection = () => {
         ) : filterProducts.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 px-6 text-center gap-3">
             <div className="w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-              <svg className="w-8 h-8 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+              <CollectionIcon11 className="w-8 h-8 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
             </div>
             <p className="text-gray-700 dark:text-gray-200 font-semibold">No products found</p>
             <p className="text-sm text-gray-400 dark:text-gray-500">Try adjusting your filters</p>
@@ -605,9 +584,7 @@ const Collection = () => {
               className="flex items-center gap-2 cursor-pointer"
               title={showFilter ? 'Hide filters' : 'Show filters'}
             >
-              <svg className="w-5 h-5 text-gray-700 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z" />
-              </svg>
+              <CollectionIcon12 className="w-5 h-5 text-gray-700 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
               {showFilter && (
                 <span className="text-lg sm:text-xl font-medium flex items-center gap-2">
                   FILTERS
@@ -618,12 +595,10 @@ const Collection = () => {
                   )}
                 </span>
               )}
-              <svg
+              <CollectionIcon13
                 className={`w-3.5 h-3.5 text-gray-400 dark:text-gray-500 transition-transform duration-200 ${showFilter ? '' : 'rotate-180'}`}
                 fill="none" stroke="currentColor" viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
+               />
             </button>
             {showFilter && activeFilterCount > 0 && (
               <button onClick={clearFilters} className="text-xs text-gray-400 dark:text-gray-500 hover:text-black dark:hover:text-white underline underline-offset-2 transition-colors">
@@ -688,18 +663,14 @@ const Collection = () => {
                   <span key={tag} onClick={() => category.includes(tag) ? toggle(setCategory, tag) : toggle(setSubCategory, tag)}
                     className="flex items-center gap-1 text-xs bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 px-2.5 py-1 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
                     {tag}
-                    <svg className="w-2.5 h-2.5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <CollectionIcon14 className="w-2.5 h-2.5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
                   </span>
                 ))}
                 {inStockOnly && (
                   <span onClick={() => setInStockOnly(false)}
                     className="flex items-center gap-1 text-xs bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 px-2.5 py-1 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
                     In Stock
-                    <svg className="w-2.5 h-2.5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <CollectionIcon15 className="w-2.5 h-2.5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
                   </span>
                 )}
               </div>
@@ -727,9 +698,7 @@ const Collection = () => {
                   <option value="newest">Newest First</option>
                   <option value="popular">Most Popular</option>
                 </select>
-                <svg className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
+                <CollectionIcon16 className="w-3.5 h-3.5 text-gray-400 dark:text-gray-500 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
               </div>
             </div>
           </div>
@@ -746,9 +715,7 @@ const Collection = () => {
             </div>
           ) : filterProducts.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 sm:py-20 text-center gap-3">
-              <svg className="w-12 h-12 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+              <CollectionIcon17 className="w-12 h-12 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
               <p className="text-gray-500 dark:text-gray-300 font-medium">No products found</p>
               <p className="text-sm text-gray-400 dark:text-gray-500">Try adjusting or clearing your filters</p>
               <button onClick={clearFilters} className="mt-2 text-sm border border-gray-300 dark:border-gray-700 px-5 py-2 hover:border-black dark:hover:border-white transition-colors">
@@ -799,9 +766,7 @@ const Collection = () => {
                 <div className="flex items-center justify-center gap-1.5 sm:gap-2 mt-10">
                   <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1}
                     className="w-8 h-8 sm:w-9 sm:h-9 border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:border-black dark:hover:border-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
+                    <CollectionIcon18 className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
                   </button>
                   {Array.from({ length: totalPages }).map((_, i) => {
                     const p = i + 1;
@@ -817,9 +782,7 @@ const Collection = () => {
                   })}
                   <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages}
                     className="w-8 h-8 sm:w-9 sm:h-9 border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:border-black dark:hover:border-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
+                    <CollectionIcon19 className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
                   </button>
                 </div>
               )}

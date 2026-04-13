@@ -3,6 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { ShopContext } from '../context/ShopContext';
 import Title from '../components/Title';
+import { ForgotPasswordIcon1, ForgotPasswordIcon2, ForgotPasswordIcon3, ForgotPasswordIcon4, ForgotPasswordIcon5 } from '../assets/assets';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -58,20 +59,12 @@ const ForgotPassword = () => {
                 bg-emerald-50 dark:bg-emerald-900/20
                 flex items-center justify-center"
               >
-                <svg
+                <ForgotPasswordIcon1
                   className="w-7 h-7 text-emerald-500"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7
-                    a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
+                 />
               </div>
 
               <div>
@@ -138,20 +131,12 @@ const ForgotPassword = () => {
                   bg-gray-100 dark:bg-gray-800
                   flex items-center justify-center flex-shrink-0"
                 >
-                  <svg
+                  <ForgotPasswordIcon2
                     className="w-5 h-5 text-gray-500 dark:text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.8}
-                      d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4
-                      a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
-                    />
-                  </svg>
+                   />
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-gray-900 dark:text-white leading-snug">
@@ -174,20 +159,12 @@ const ForgotPassword = () => {
                   }`}
                 >
                   <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
-                    <svg
+                    <ForgotPasswordIcon3
                       className="w-4 h-4 text-gray-400"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.8}
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7
-                        a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
+                     />
                   </div>
                   <input
                     type="email"
@@ -218,21 +195,7 @@ const ForgotPassword = () => {
                 >
                   {sending ? (
                     <>
-                      <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        />
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                        />
-                      </svg>
+                      <ForgotPasswordIcon4 className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24" />
                       Sending...
                     </>
                   ) : (
@@ -252,14 +215,7 @@ const ForgotPassword = () => {
             hover:text-gray-900 dark:hover:text-white
             transition-colors duration-150"
         >
-          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
+          <ForgotPasswordIcon5 className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
           Back to login
         </button>
       </div>

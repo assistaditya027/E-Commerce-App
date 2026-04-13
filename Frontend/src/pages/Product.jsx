@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { ShopContext } from '../context/ShopContext';
 import { assets } from '../assets/assets';
 import RelatedProducts from '../components/RelatedProducts';
+import { ProductIcon1, ProductIcon2, ProductIcon3, ProductIcon4, ProductIcon5, ProductIcon6, ProductIcon7, ProductIcon8, ProductIcon9, ProductIcon10, ProductIcon11, ProductIcon12, ProductIcon13, ProductIcon14, ProductIcon15, ProductIcon16, ProductIcon17 } from '../assets/assets';
 
 const LOW_STOCK = 5;
 
@@ -69,14 +70,7 @@ const Modal = ({ open, onClose, title, children }) => {
             onClick={onClose}
             className="text-gray-400 dark:text-gray-500 hover:text-black dark:hover:text-white transition-colors"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            <ProductIcon1 className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
           </button>
         </div>
         <div className="px-6 py-5">{children}</div>
@@ -128,14 +122,7 @@ const ZoomModal = ({ open, onClose, src, alt }) => {
         onClick={onClose}
         className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors z-10"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
+        <ProductIcon2 className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
       </button>
       <div className="absolute top-4 left-1/2 -translate-x-1/2 flex items-center gap-3 z-10">
         <button
@@ -225,14 +212,12 @@ const ReviewForm = ({ onSubmit }) => {
     return (
       <div className="flex flex-col items-center gap-2 py-6 text-center">
         <div className="w-10 h-10 rounded-full bg-green-50 border border-green-200 flex items-center justify-center">
-          <svg
+          <ProductIcon3
             className="w-5 h-5 text-green-500"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
+           />
         </div>
         <p className="text-sm font-medium text-gray-800 dark:text-gray-100">
           Thanks for your review!
@@ -302,13 +287,7 @@ const ReviewForm = ({ onSubmit }) => {
       </div>
       {error && (
         <p className="text-xs text-red-500 flex items-center gap-1">
-          <svg className="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-            <path
-              fillRule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-              clipRule="evenodd"
-            />
-          </svg>
+          <ProductIcon4 className="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" />
           {error}
         </p>
       )}
@@ -316,14 +295,7 @@ const ReviewForm = ({ onSubmit }) => {
         type="submit"
         className="bg-black text-white dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100 py-2.5 text-sm font-medium hover:bg-gray-800 active:scale-[0.98] transition-all duration-150 flex items-center justify-center gap-2"
       >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-          />
-        </svg>
+        <ProductIcon5 className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
         Submit Review
       </button>
     </form>
@@ -505,14 +477,7 @@ const Product = () => {
               />
               {imgLoaded && (
                 <div className="absolute bottom-3 right-3 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 px-2 py-1 text-xs text-gray-500 dark:text-gray-300 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
-                    />
-                  </svg>
+                  <ProductIcon6 className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
                   Click to zoom
                 </div>
               )}
@@ -531,28 +496,14 @@ const Product = () => {
                 className="w-9 h-9 border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:border-black dark:hover:border-white transition-all text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white"
               >
                 {shareState === 'copied' ? (
-                  <svg
+                  <ProductIcon7
                     className="w-4 h-4 text-green-500"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
+                   />
                 ) : (
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
-                    />
-                  </svg>
+                  <ProductIcon8 className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
                 )}
               </button>
               <button
@@ -565,18 +516,12 @@ const Product = () => {
                   }`}
                 aria-label={isWishlisted(productData._id) ? 'Remove from wishlist' : 'Add to wishlist'}
               >
-                <svg
+                <ProductIcon9
                   className={`w-4 h-4 transition-colors ${isWishlisted(productData._id) ? 'text-red-500 fill-red-500' : 'text-gray-400 dark:text-gray-500 fill-none'}`}
                   stroke="currentColor"
                   strokeWidth={isWishlisted(productData._id) ? 0 : 1.8}
                   viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
+                 />
               </button>
             </div>
           </div>
@@ -639,14 +584,7 @@ const Product = () => {
                 onClick={() => setSizeGuideOpen(true)}
                 className="text-xs text-gray-400 underline underline-offset-2 hover:text-black transition-colors flex items-center gap-1"
               >
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"
-                  />
-                </svg>
+                <ProductIcon10 className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
                 Size Guide
               </button>
             </div>
@@ -701,28 +639,14 @@ const Product = () => {
             {/* Show stock hint for selected size */}
             {size && isLowStock && (
               <p className="text-xs text-amber-600 flex items-center gap-1">
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
+                <ProductIcon11 className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
                 Only {selectedStock} left in size {size} — order soon!
               </p>
             )}
 
             {!size && (
               <p className="text-xs text-gray-400 flex items-center gap-1">
-                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
+                <ProductIcon12 className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
                 Please select a size before adding to cart.
               </p>
             )}
@@ -744,38 +668,17 @@ const Product = () => {
             >
               {addedToCart ? (
                 <>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
+                  <ProductIcon13 className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
                   ADDED TO CART
                 </>
               ) : isOutOfStock && size ? (
                 <>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"
-                    />
-                  </svg>
+                  <ProductIcon14 className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
                   OUT OF STOCK
                 </>
               ) : (
                 <>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.8}
-                      d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                    />
-                  </svg>
+                  <ProductIcon15 className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
                   ADD TO CART
                 </>
               )}
@@ -800,14 +703,13 @@ const Product = () => {
               },
             ].map(({ d, text }) => (
               <div key={text} className="flex items-center gap-2">
-                <svg
+                <ProductIcon16
                   className="w-4 h-4 text-green-500 flex-shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d={d} />
-                </svg>
+                  d={d}
+                 />
                 <p>{text}</p>
               </div>
             ))}
@@ -999,19 +901,12 @@ const Product = () => {
         </div>
         <div className="mt-5 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 px-4 py-3">
           <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
-            <svg
+            <ProductIcon17
               className="w-4 h-4 text-green-500 flex-shrink-0"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
+             />
             Not sure? Size up for a relaxed fit. Free exchanges within 7 days.
           </p>
         </div>

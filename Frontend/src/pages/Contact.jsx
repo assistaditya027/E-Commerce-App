@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { assets } from '../assets/assets';
 import NewsletterBox from '../components/NewsletterBox';
 import Title from '../components/Title';
+import { ContactIcon1, ContactIcon2, ContactIcon3, ContactIcon4, ContactIcon5, ContactIcon6 } from '../assets/assets';
 
 /* ── inview hook ── */
 const useInView = (threshold = 0.15) => {
@@ -100,13 +101,7 @@ const ContactForm = () => {
   const ErrorMsg = ({ field }) =>
     errors[field] ? (
       <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
-        <svg className="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-          <path
-            fillRule="evenodd"
-            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-            clipRule="evenodd"
-          />
-        </svg>
+        <ContactIcon1 className="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" />
         {errors[field]}
       </p>
     ) : null;
@@ -115,19 +110,12 @@ const ContactForm = () => {
     return (
       <div className="flex flex-col items-center justify-center gap-4 py-16 text-center">
         <div className="w-14 h-14 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-800 rounded-2xl flex items-center justify-center">
-          <svg
+          <ContactIcon2
             className="w-7 h-7 text-emerald-500"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
+           />
         </div>
 
         <h4 className="text-base font-semibold text-gray-900 dark:text-white">Message sent!</h4>
@@ -226,29 +214,12 @@ const ContactForm = () => {
       >
         {status === 'loading' ? (
           <>
-            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-            </svg>
+            <ContactIcon3 className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24" />
             Sending…
           </>
         ) : (
           <>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-              />
-            </svg>
+            <ContactIcon4 className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
             Send Message
           </>
         )}
@@ -341,14 +312,13 @@ const Contact = () => {
             ].map(({ icon, text }) => (
               <div key={text} className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
-                  <svg
+                  <ContactIcon5
                     className="w-4 h-4 text-gray-500 dark:text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
-                  >
-                    {icon}
-                  </svg>
+                    icon={icon}
+                   />
                 </div>
                 <span className="text-sm text-gray-500 dark:text-gray-400">{text}</span>
               </div>
@@ -371,14 +341,7 @@ const Contact = () => {
               className="flex items-center gap-2 bg-gray-900 dark:bg-white dark:text-gray-900 hover:bg-black dark:hover:bg-gray-100
               active:scale-[0.98] text-white text-xs font-medium px-4 py-2 rounded-lg transition-all duration-150 shadow-sm shadow-gray-900/20"
             >
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                />
-              </svg>
+              <ContactIcon6 className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" />
               Explore Jobs
             </button>
           </div>

@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { ShopContext } from '../context/ShopContext';
 import Title from '../components/Title';
 import { Link } from 'react-router-dom';
+import { WishlistIcon1, WishlistIcon2 } from '../assets/assets';
 
 const Wishlist = () => {
   const { wishlist, products, currency, toggleWishlist } = useContext(ShopContext);
@@ -19,19 +20,12 @@ const Wishlist = () => {
       {/* ── Empty State ── */}
       {wishlistProducts.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12 sm:py-16">
-          <svg
+          <WishlistIcon1
             className="w-16 h-16 sm:w-20 sm:h-20 text-gray-300 dark:text-gray-600 mb-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.5}
-              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-            />
-          </svg>
+           />
           <p className="text-gray-500 dark:text-gray-400 text-center mb-4">
             Your wishlist is empty
           </p>
@@ -109,9 +103,7 @@ const WishlistItem = ({ product, currency, onToggleWishlist }) => {
             group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-600"
           aria-label="Remove from wishlist"
         >
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-          </svg>
+          <WishlistIcon2 className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" />
         </button>
       </Link>
 

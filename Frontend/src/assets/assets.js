@@ -17,7 +17,8 @@ import contact_img from './contact_img.png';
 import razorpay_logo from './razorpay_logo.png';
 import stripe_logo from './stripe_logo.png';
 
-export const assets = {
+// Static image/file assets used across frontend pages/components.
+export const imageAssets = {
   logo,
   hero_img1,
   hero_img2,
@@ -37,3 +38,21 @@ export const assets = {
   razorpay_logo,
   stripe_logo,
 };
+
+// Backward-compatible export used throughout existing code.
+export const assets = imageAssets;
+
+// Re-export all SVG icon components from one central entry-point.
+export * from './icons/AboutIcons';
+export * from './icons/CartIcons';
+export * from './icons/CollectionIcons';
+export * from './icons/ContactIcons';
+export * from './icons/ForgotPasswordIcons';
+export * from './icons/LoginIcons';
+export * from './icons/PlaceOrderIcons';
+export * from './icons/PrivacyIcons';
+export * from './icons/ProductIcons';
+export * from './icons/ProfileIcons';
+export * from './icons/ResetPasswordIcons';
+export * from './icons/TermsIcons';
+export * from './icons/WishlistIcons';
